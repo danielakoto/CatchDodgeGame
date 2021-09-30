@@ -75,17 +75,6 @@ const winCheer1 = document.createElement('audio'); //win cheer one 1 when highsc
 winCheer1.src = 'public/sounds/ChildrenYaySoundEffect.mp3';
 winCheer1.volume = 0.08;
 
-const backgroundAudio = document.createElement('audio');
-backgroundAudio.src = 'public/sounds/Abracadavre.mp3';
-backgroundAudio.volume = 0.02;
-
-
-
-
-
-backgroundAudio.volume = 0.08;
-backgroundAudio.load();
-
 
 //Player 
 
@@ -327,13 +316,13 @@ function animate(){
 }
 
 function startGame(){
-    console.log("Test Started");
-    backgroundAudio.play();
+    console.log("Game Started");
     splash.style.display = 'none';
     endgame.style.display = 'inline-block';
     animate();
 }
 
+setTimeout(location.reload.bind(location), 6000);
 function gameOver() {
     var currentScore = (templevel*5)+score;
     if(currentScore > 20 )
