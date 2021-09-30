@@ -322,7 +322,7 @@ function startGame(){
     animate();
 }
 
-setTimeout(location.reload.bind(location), 6000);
+window.setTimeout(function(){location.reload()},3000)
 function gameOver() {
     var currentScore = (templevel*5)+score;
     if(currentScore > 20 )
