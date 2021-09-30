@@ -322,8 +322,9 @@ function startGame(){
     animate();
 }
 
-window.setTimeout(function(){location.reload()},3000)
+
 function gameOver() {
+    window.setTimeout(function(){location.reload()},3000)
     var currentScore = (templevel*5)+score;
     if(currentScore > 20 )
         winCheer1.play();
