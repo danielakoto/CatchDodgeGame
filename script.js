@@ -9,7 +9,7 @@ const showHighScore = document.getElementById('showHighscore');
 
 
 st.addEventListener('click', startGame);
-//endgame.addEventListener('click', gameOver);
+endgame.addEventListener('click', gameOver);
 
 //Canvas 
 const ctx = canvas.getContext('2d');
