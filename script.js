@@ -1,8 +1,3 @@
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-
-
 
 //Start Game
 const st = document.getElementById('StartButton');
@@ -71,8 +66,6 @@ var que =  Math.floor((Math.random()*10));
 //Sounds
 const bubblePop1 = document.createElement('audio'); //bubble pop 1
 bubblePop1.src = 'public/sounds/bubbles-single1.wav';
-const bubblePop2 = document.createElement('audio'); //bubble pop 2
-bubblePop2.src = 'public/sounds/bubbles-single2.wav';
 
 const enemybubblePop1 = document.createElement('audio'); //enemy ballon pop 1
 enemybubblePop1.src = 'public/sounds/BalloonPop1.wav';
@@ -81,10 +74,6 @@ enemybubblePop1.volume = 0.8;
 const winCheer1 = document.createElement('audio'); //win cheer one 1 when highscore > 20
 winCheer1.src = 'public/sounds/ChildrenYaySoundEffect.mp3';
 winCheer1.volume = 0.08;
-
-const startSound = document.createElement('audio');
-startSound.src = 'public/sounds/narutosound.wav'
-startSound.volume = 0.08;
 
 const backgroundAudio = document.createElement('audio');
 backgroundAudio.src = 'public/sounds/Abracadavre.mp3';
@@ -176,7 +165,7 @@ class Bubble {
         this.speed = Math.random() * 5 + (level/2);
         this.distance;
         this.counted = false;
-        this.sound = Math.random() <= 0.5 ? 'sound1' : 'sound2';
+        this.sound = 'sound1';
         this.spriteWidth = 498;
         this.spriteHeight = 327;
         this.e = Math.floor((Math.random()*10));
@@ -351,11 +340,6 @@ function gameOver() {
         winCheer1.play();
     location.reload();
 }
-
-
-
-
-
 
 
 

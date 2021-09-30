@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Arcadeathon</title>
         <link rel="stylesheet" href="style.css">
+        <link rel="shortcut icon" type="image/png" href="https://img.icons8.com/office/80/000000/controller.png">
     </head>
     <body >
        <center><div id='SplashScreen'>
@@ -36,6 +37,10 @@
             appId: "1:965538836193:web:257d272e061c5d9a82d1a0",
             measurementId: "G-38PJX9R77F"
             };
+
+            // Initialize Firebase
+            const app = initializeApp(firebaseConfig);
+            const analytics = getAnalytics(app);
         </script>
 	 </body>
 </html>
