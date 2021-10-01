@@ -102,3 +102,13 @@ body {
     top: 90%;
     color: aliceblue;
   }
+
+  .finscore {
+    position: absolute;
+    display: inline;
+    color: white;
+    z-index: 20;
+    top: 10%;
+    left: 46%;
+    font-size: 100px;
+  }

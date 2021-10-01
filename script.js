@@ -6,6 +6,7 @@ const canvas = document.getElementById('canvas1');
 const endgame = document.getElementById('endgame');
 const canvas1 = document.getElementById('canvasback');
 const showHighScore = document.getElementById('showHighscore');
+const finscore = document.getElementById('finscore');
 
 
 st.addEventListener('click', startGame);
@@ -66,15 +67,20 @@ var que =  Math.floor((Math.random()*10));
 //Sounds
 const bubblePop1 = document.createElement('audio'); //bubble pop 1
 bubblePop1.src = 'public/sounds/bubbles-single1.wav';
+bubblePop1.volume = 0.6;
 
 const enemybubblePop1 = document.createElement('audio'); //enemy ballon pop 1
 enemybubblePop1.src = 'public/sounds/BalloonPop1.wav';
-enemybubblePop1.volume = 0.8;
+enemybubblePop1.volume = 0.5;
 
 const winCheer1 = document.createElement('audio'); //win cheer one 1 when highscore > 20
 winCheer1.src = 'public/sounds/ChildrenYaySoundEffect.mp3';
 winCheer1.volume = 0.08;
 
+//Load Sounds
+bubblePop1.load();
+enemybubblePop1.load();
+winCheer1.load();
 
 //Player 
 
@@ -264,7 +270,7 @@ function handleBubbles(){
 var chances = 0;
 
 function enemyhandleBubbles() {
-    if (gameFrame % (50) == 0){
+    if (gameFrame % (125) == 0){
         playerLeft.src = 'public/img/black-circle.png';
         playerRight.src = 'public/img/black-circle.png';
         enemybubblesArray.push(new EnemyBubble());
@@ -324,11 +330,23 @@ function startGame(){
 
 
 function gameOver() {
-    window.setTimeout(function(){location.reload()},3000)
+    console.log("Game Ended");
     var currentScore = (templevel*5)+score;
-    if(currentScore > 20 )
+    if(currentScore > 20 ) {
+        splash.style.display = 'absolute';
+        endgame.style.display = 'none';
         winCheer1.play();
-    location.reload();
+        console.log(currentScore);
+        finscore.innerHTML = 'Congrats! Final Score: ' + currentScore;
+        window.setTimeout(function(){location.reload()},6000)
+    }
+    else {
+        splash.style.display = 'absolute';
+        endgame.style.display = 'none';
+        console.log(currentScore);
+        finscore.innerHTML = 'Final Score: ' + currentScore;
+        window.setTimeout(function(){location.reload()},3000)
+    }
 }
 
 
@@ -374,8 +392,4 @@ balls.forEach((el, i, ra) => {
     }
   );
 });
-
-
-
-
 
