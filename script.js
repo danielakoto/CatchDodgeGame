@@ -166,9 +166,6 @@ class Bubble {
         this.e = Math.floor((Math.random()*10));
     }
 
-    
-
-
     update(){
 
         this.y -= this.speed;
@@ -198,7 +195,7 @@ class EnemyBubble {
         this.x = Math.random() * canvas.width;
         this.y = canvas.height + 100;
         this.radius = 38;
-        this.speed = Math.random() * 2 + level;
+        this.speed = Math.random() * 2 + level/2;
         this.distance;
         this.counted = false;
         this.sound = 'sound1';
@@ -268,7 +265,8 @@ function handleBubbles(){
 }
 
 function enemyhandleBubbles() {
-    if (gameFrame % (125) == 0){
+    let numframe = 125-(5*level);
+    if (gameFrame % (numframe) == 0){
         playerLeft.src = 'public/img/black-circle.png';
         playerRight.src = 'public/img/black-circle.png';
         enemybubblesArray.push(new EnemyBubble());
@@ -347,7 +345,7 @@ function gameOver() {
 
 
 //Background
-const colors = ["#FFFFFF", "#FFFFFF", "#FFFFFF", "#FFFFFF", "#FFFFFF"];
+const colors = ["#FFFFFF", "#FFFFFF", "#000", "#FFFFFF", "#000"];
 
 const numBalls = 50;
 const balls = [];

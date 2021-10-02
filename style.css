@@ -24,7 +24,7 @@ body {
     width: 800px;
     height: 500px;
     /* background: url(background2.jpg); */
-    background-image: linear-gradient(rgb(255, 255, 255), rgb(100, 114, 117));
+    background-image: linear-gradient(rgb(255, 255, 255), rgb(109, 109, 109));
     background-repeat: repeat-x;
     position: absolute;
     z-index: -1;
