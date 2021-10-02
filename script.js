@@ -267,8 +267,6 @@ function handleBubbles(){
     }
 }
 
-var chances = 0;
-
 function enemyhandleBubbles() {
     if (gameFrame % (125) == 0){
         playerLeft.src = 'public/img/black-circle.png';
@@ -292,12 +290,9 @@ function enemyhandleBubbles() {
                         enemybubblePop1.play();
                     playerLeft.src = 'public/img/black-circle.png';
                     playerRight.src = 'public/img/black-circle.png';
-                    score--;
-                    chances++;
                     enemybubblesArray[j].counted = true;
                     enemybubblesArray.splice(j, 1);
-                    if(score == -1 || chances == 3)
-                        gameOver();
+                    gameOver();
                 }
             }
         }
@@ -338,14 +333,14 @@ function gameOver() {
         winCheer1.play();
         console.log(currentScore);
         finscore.innerHTML = 'Congrats! Final Score: ' + currentScore;
-        window.setTimeout(function(){location.reload()},6000)
+        window.setTimeout(function(){location.reload()},5000)
     }
     else {
         splash.style.display = 'absolute';
         endgame.style.display = 'none';
         console.log(currentScore);
         finscore.innerHTML = 'Final Score: ' + currentScore;
-        window.setTimeout(function(){location.reload()},3000)
+        window.setTimeout(function(){location.reload()},2000)
     }
 }
 

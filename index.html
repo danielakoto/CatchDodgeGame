@@ -3,37 +3,49 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Catch Dodge Game</title>
+        <title>Arcadeathon</title>
         <link rel="stylesheet" href="style.css">
         <link rel="shortcut icon" type="image/png" href="https://img.icons8.com/office/80/000000/controller.png">
     </head>
-</head>
-<body>
-    <h1 ></h1>
-    <h1 style="color: white;">Hi! Let's play the Catch Dodge Game!</h1>
-    <a href='game.html' class='game'>Play Game</a>
-    <script>
-        // Import the functions you need from the SDKs you need
-        import { initializeApp } from "firebase/app";
-        import { getAnalytics } from "firebase/analytics";
-        // TODO: Add SDKs for Firebase products that you want to use
-        // https://firebase.google.com/docs/web/setup#available-libraries
+    <body >
+       <center><div id='SplashScreen'>
+            <h1>Dodge-athon</h1>
+            <input type="submit" id='StartButton' value='Start' style="color: black;">
+            <input type='text' id='score' name='score' style="display: none;">
+            <br>
+            <p>Catch the black balls and dodge the white balls!</p>
+        </div></center>
+        <canvas id='canvasback' >Your browser is not supported fro HTML5 canvas tag.</canvas>
+        <canvas id="canvas1" >Your browser is not supported fro HTML5 canvas tag.</canvas>
 
-        // Your web app's Firebase configuration
-        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-        const firebaseConfig = {
-        apiKey: "AIzaSyBENGLE2VcYFrfPYCIeCHtpcdMqekBhb0Q",
-        authDomain: "catchdodgegame.firebaseapp.com",
-        projectId: "catchdodgegame",
-        storageBucket: "catchdodgegame.appspot.com",
-        messagingSenderId: "965538836193",
-        appId: "1:965538836193:web:257d272e061c5d9a82d1a0",
-        measurementId: "G-38PJX9R77F"
-        };
+        <button onclick="gameOver()" id='endgame' class="endgameclass" style="display: none;">End Game</button>
+        <button id='endgame' class="endgameclass" style="display: none;">End Game</button>
+        <center><div><h1 id="finscore" class="finscore"></h1></div></center>
+        
+        <script src='script.js'></script>
+        <script>
+            // Import the functions you need from the SDKs you need
+            import { initializeApp } from "firebase/app";
+            import { getAnalytics } from "firebase/analytics";
+            // TODO: Add SDKs for Firebase products that you want to use
+            // https://firebase.google.com/docs/web/setup#available-libraries
 
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
-    </script>
-</body>
+            // Your web app's Firebase configuration
+            // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+            const firebaseConfig = {
+            apiKey: "AIzaSyBENGLE2VcYFrfPYCIeCHtpcdMqekBhb0Q",
+            authDomain: "catchdodgegame.firebaseapp.com",
+            projectId: "catchdodgegame",
+            storageBucket: "catchdodgegame.appspot.com",
+            messagingSenderId: "965538836193",
+            appId: "1:965538836193:web:257d272e061c5d9a82d1a0",
+            measurementId: "G-38PJX9R77F"
+            };
+
+            // Initialize Firebase
+            const app = initializeApp(firebaseConfig);
+            const analytics = getAnalytics(app);
+            
+        </script>
+	 </body>
 </html>
