@@ -1,5 +1,3 @@
-//
-
 
 //Start Game
 const st = document.getElementById('StartButton');
@@ -9,7 +7,9 @@ const endgame = document.getElementById('endgame');
 const canvas1 = document.getElementById('canvasback');
 const showHighScore = document.getElementById('showHighscore');
 const finscore = document.getElementById('finscore');
-
+const hid = document.getElementById('highestnumber');
+const dodge = document.getElementById('dodge');
+const statement = document.getElementById('statement');
 
 st.addEventListener('click', startGame);
 endgame.addEventListener('click', gameOver);
@@ -26,13 +26,12 @@ let templevel = 0;
 let gameFrame = 0;
 ctx.font = '50px Comic Sans MS';
 
-//Player COnst
+//Player 
 const playerRight = new Image();
 const playerLeft = new Image();
 
 //Mouse Interact
 let canvasPosition = canvas.getBoundingClientRect();
-//var interval = setInterval(draw, 10);
 
 
 const mouse = {
@@ -75,14 +74,10 @@ const enemybubblePop1 = document.createElement('audio'); //enemy ballon pop 1
 enemybubblePop1.src = 'public/sounds/BalloonPop1.wav';
 enemybubblePop1.volume = 0.5;
 
-const winCheer1 = document.createElement('audio'); //win cheer one 1 when highscore > 20
-winCheer1.src = 'public/sounds/ChildrenYaySoundEffect.mp3';
-winCheer1.volume = 0.08;
 
 //Load Sounds
 bubblePop1.load();
 enemybubblePop1.load();
-winCheer1.load();
 
 //Player 
 
@@ -117,18 +112,12 @@ class Player {
     }
 
     draw(){
-        //ctx.fillStyle = 'white';
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0 , Math.PI * 2);
-        //ctx.fill();
         ctx.closePath();
-        //ctx.fillRect(this.x, this.y, this.radius, 10);
-
-
         ctx.save();
         ctx.translate(this.x, this.y);
         ctx.rotate(this.angle);
-
         if(this.x >= mouse.x){
             ctx.drawImage(playerLeft, 0-45, 0-45, this.spriteWidth/4-40, this.spriteHeight/4)
         }
@@ -140,16 +129,12 @@ class Player {
 }
 const player = new Player();
 
-
 const theimg = document.createElement('img');
 theimg.src = 'public/img/black.png';
 
 
 const enemyimg = document.createElement('img');
 enemyimg.src = 'public/img/w.png';
-
-
-
 
 //Bubbles
 const bubblesArray = [];
@@ -177,13 +162,9 @@ class Bubble {
     
     }
     draw(){
-        //ctx.fillStyle = 'yellow';
-        //ctx.fillStyle = 'green';
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true);
-        //ctx.fill();
         ctx.drawImage(theimg, this.x-25, this.y-45, this.spriteWidth/4-40, this.spriteHeight/4+5)
-        
         ctx.closePath();
         ctx.restore();
     }
@@ -205,8 +186,6 @@ class EnemyBubble {
         this.spriteHeight = 327;
         this.e = Math.floor((Math.random()*10));
     }
-
-
     update(){
         this.y -= this.speed;
         const dx = this.x - player.x;
@@ -215,10 +194,8 @@ class EnemyBubble {
     
     }
     draw(){
-        //ctx.fillStyle = 'red';
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true);
-        //ctx.fill();
         ctx.drawImage(enemyimg, this.x-25, this.y-45, this.spriteWidth/4-40, this.spriteHeight/4+5);
         ctx.closePath();
         ctx.restore();
@@ -254,10 +231,9 @@ function handleBubbles(){
                     score++;
                     bubblesArray[i].counted = true;
                     bubblesArray.splice(i, 1);
-                    if(score == 5) {
+                    if(score % 5 == 0) {
                         level++;
                         templevel++;
-                        score = 0;
                         enemySpeed += level;
                     }
                 }
@@ -308,44 +284,55 @@ function animate(){
     player.update();
     player.draw();
     ctx.fillStyle = 'black';
+    ctx.font = '18px';
     ctx.fillText('Score: ' + score, 7, 50);
-    ctx.fillText('Level: ' + level, 550, 50);
-    ctx.fillText('Level: ' + level, 550, 50);
     gameFrame++;
     requestAnimationFrame(animate);
     
 }
+//Settle High Score
+function getHighScore(hid) {
+    var ref = db.collection("highscore").orderBy("highnum", "desc").limit(1);
+    ref.get().then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc){
+            hid.innerHTML = "Highest Score = " + doc.data().highnum;
+        })
+    })
+}
+getHighScore(hid);
 
 function startGame(){
-    console.log("Game Started");
     splash.style.display = 'none';
     endgame.style.display = 'inline-block';
     animate();
 }
 
-
 function gameOver() {
-    console.log("Game Ended");
-    var currentScore = (templevel*5)+score;
-    if(currentScore > 20 ) {
-        splash.style.display = 'absolute';
-        endgame.style.display = 'none';
-        winCheer1.play();
-        console.log(currentScore);
-        finscore.innerHTML = 'Congrats! Final Score: ' + currentScore;
-        window.setTimeout(function(){location.reload()},5000)
+    bubblePop1.volume = 0;
+    enemybubblePop1.volume = 0;
+    dodge.innerHTML = "Game Over";
+    statement.innerHTML = "reloading..."
+    endgame.style.display = 'none';
+    splash.style.display = 'inline-block';
+    canvas1.style.zIndex = '2';
+    splash.style.zIndex = '3';
+
+    var currentScore = score;
+    finscore.innerHTML = 'Your Score: ' + currentScore;
+
+    //Update database if current highscore is greater than score in database
+    var database = db.collection('highscore');
+    const { serverTimestamp } = firebase.firestore.FieldValue;
+    if (currentScore > getHighScore(hid)) {
+        const highnum = currentScore;
+        database.add({
+            highnum: highnum,
+            time: serverTimestamp(),
+            });
     }
-    else {
-        splash.style.display = 'absolute';
-        endgame.style.display = 'none';
-        console.log(currentScore);
-        finscore.innerHTML = 'Final Score: ' + currentScore;
-        window.setTimeout(function(){location.reload()},2000)
-    }
+
+    window.setTimeout(function(){location.reload()},2000)
 }
-
-
-
 //Background
 const colors = ["#FFFFFF", "#FFFFFF", "#000", "#FFFFFF", "#000"];
 
