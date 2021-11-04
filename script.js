@@ -310,6 +310,7 @@ function startGame(){
 function gameOver() {
     bubblePop1.volume = 0;
     enemybubblePop1.volume = 0;
+    st.style.display = 'none';
     dodge.innerHTML = "Game Over";
     statement.innerHTML = "reloading..."
     endgame.style.display = 'none';
