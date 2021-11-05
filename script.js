@@ -43,8 +43,6 @@ canvas.addEventListener('mousedown', function(e){
     mouse.click = true;
     mouse.x = e.x - canvasPosition.left;
     mouse.y = e.y - canvasPosition.top;
-    playerRight.src = 'public/img/mouthopen1flip.png';
-    playerLeft.src = 'public/img/mouthopen1.png';
 });
 
 canvas.addEventListener('mousemove', function(e){
@@ -290,8 +288,18 @@ function animate(){
     requestAnimationFrame(animate);
     
 }
+
 //Settle High Score
-function getHighScore(hid) {
+async function getX() {
+    let b = [];
+    var ref = db.collection("highscore").orderBy("highnum", "desc").limit(1);
+    await ref.get().then(snapshot => {
+            b = snapshot.docs.map(doc => doc.data().highnum);
+    })
+    return parseInt(b);
+}
+
+function getHighScore(hid) { 
     var ref = db.collection("highscore").orderBy("highnum", "desc").limit(1);
     ref.get().then(function(querySnapshot) {
         querySnapshot.forEach(function(doc){
@@ -307,32 +315,37 @@ function startGame(){
     animate();
 }
 
-function gameOver() {
+async function gameOver() {
+    
+    
     bubblePop1.volume = 0;
     enemybubblePop1.volume = 0;
     st.style.display = 'none';
     dodge.innerHTML = "Game Over";
-    statement.innerHTML = "reloading..."
+    statement.innerHTML = 'reloading...'
     endgame.style.display = 'none';
+    endgame.hidden = 'true'
     splash.style.display = 'inline-block';
     canvas1.style.zIndex = '2';
     splash.style.zIndex = '3';
 
     var currentScore = score;
     finscore.innerHTML = 'Your Score: ' + currentScore;
-
+    
+    const x = await getX();
+    
     //Update database if current highscore is greater than score in database
-    var database = db.collection('highscore');
     const { serverTimestamp } = firebase.firestore.FieldValue;
-    if (currentScore > getHighScore(hid)) {
-        const highnum = currentScore;
-        database.add({
-            highnum: highnum,
+    if (currentScore > x) {
+        const h = currentScore;
+        db.collection('highscore').doc('1').update({
+            highnum: h,
             time: serverTimestamp(),
-            });
+        });
     }
 
-    window.setTimeout(function(){location.reload()},2000)
+    window.setTimeout(function(){location.reload()},1500);
+    
 }
 //Background
 const colors = ["#FFFFFF", "#FFFFFF", "#000", "#FFFFFF", "#000"];
